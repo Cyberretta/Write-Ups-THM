@@ -50,14 +50,21 @@ So let's reverse it like so : 41 47 42 36 6a 73 35 64
 Now let's decode this to ASCII : AGB6js5d
 If you try to use this as a username, it won't work. Why ? Because it's only a part of the username to find.  
 Looking at the C code in ghidra don't help... So let's take a look at the assembly code.  
-![alt text](https://i.imgur.com/a08fWIv.png)  
+![](https://i.imgur.com/a08fWIv.png)  
 We can see that there is 3 hex values here, the first one is the one we already decoded, and the two others are maybe two other parts of the username ?
 Let's try to decode those two values and see if it works :  
 0x476b6439 -> 9dkG  
 0x37 -> 7  
 So if we take the 3 values we found and put them together, we have **AGB6js5d9dkG7**.  
 Let's use it in the program to get the flag !  
-![alt text](https://i.imgur.com/NwzsIxE.png)
+```
+attacker@AttackBox:~/Bureau/CTF/Classic_Passwd$ ./Challenge.Challenge 
+Insert your username: AGB6js5d9dkG7
+
+Welcome
+THM{*********}
+attacker@AttackBox:~/Bureau/CTF/Classic_Passwd$
+```
 
 **Honestly, I tried to understand why and how it was working like this (the username is divided in 3 parts but looking at the strcmp function call, there is no way to know that there is two other variables used with local_246).  
 So for now I will just write what I found and what I understood. I will try again to understand more what is happening in this program, but another time**
@@ -66,12 +73,31 @@ So for now I will just write what I found and what I understood. I will try agai
 
 We can use ltrace to recover the value of local_246 variable (the variable that contains the right username).  
 I used ``ltrace ./Challenge.Challenge``. When the program asked for a username, I just entered a random string "test". And I got the value of variable local_246 !  
-![alt text](https://i.imgur.com/P46oZDp.png)  
+```
+attacker@AttackBox:~/Bureau/CTF/Classic_Passwd$ ltrace ./Challenge.Challenge 
+printf("Insert your username: ")                                         = 22
+__isoc99_scanf(0x55b7e298d01b, 0x7ffda64a7a60, 0, 0Insert your username: test
+)                     = 1
+strcpy(0x7ffda64a79d0, "test")                                           = 0x7ffda64a79d0
+strcmp("test", "AGB6js5d9dkG7")                                          = 51
+puts("\nAuthentication Error"
+Authentication Error
+)                                           = 22
+exit(0 <no return ...>
++++ exited (status 0) +++
+```
+
 Now we have the right username which is **AGB6js5d9dkG7** !  
 To get the flag, we just have to execute the binary like this : ``./Challenge.Challenge``.  
 When the executable asks for a username, we just need to enter **AGB6js5d9dkG7**, and we have the flag !
-![alt text](https://i.imgur.com/NwzsIxE.png)  
+```
+attacker@AttackBox:~/Bureau/CTF/Classic_Passwd$ ./Challenge.Challenge 
+Insert your username: AGB6js5d9dkG7
 
+Welcome
+THM{*********}
+attacker@AttackBox:~/Bureau/CTF/Classic_Passwd$
+```
 
 ### 3rd method
 
