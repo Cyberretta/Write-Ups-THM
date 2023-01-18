@@ -556,7 +556,7 @@ I figured out what encoding types was used. We need to use the string we have an
 hash (I used [hashes.com](https://hashes.com/en/tools/hash_identifier) to identify the hash type) :  
 ![](https://i.imgur.com/8hSJMQs.jpg)  
 ![](https://i.imgur.com/nUy4Dy9.jpg)  
-![](https://i.imgur.com/ehfFM2f.jpg)  
+![](https://i.imgur.com/RY4csqf.jpg)  
 
 Now, let's try to crack this hash with [crackstation.net](https://crackstation.net/) :  
 ![](https://i.imgur.com/OhzpXUf.jpg)  
