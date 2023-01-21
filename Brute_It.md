@@ -1,6 +1,7 @@
 <p align="center">
   THM : Brute It<br>
   Difficulty : Easy<br>
+  Room link : https://tryhackme.com/room/bruteit<br>
   <img src="https://i.imgur.com/cJ8NqJf.jpg">
 </p>
 
