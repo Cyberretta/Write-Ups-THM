@@ -1,6 +1,7 @@
 <p align="center">
   THM : Smag Grotto<br>
   Difficulty : Easy<br>
+  Room link : https://tryhackme.com/room/smaggrotto<br>
   <img src="https://i.imgur.com/o08Runb.png">
 </p>
 
