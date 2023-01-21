@@ -1,6 +1,7 @@
 <p align="center">
   THM : Blog<br>
   Difficulty : Medium<br>
+  Room link : https://tryhackme.com/room/blog<br>
   <img src="https://i.imgur.com/0uqrcEp.jpg">
 </p>
 
