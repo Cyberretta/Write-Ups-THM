@@ -1,6 +1,7 @@
 <p align="center">
   THM : Agent Sudo<br>
   Difficulty : Easy<br>
+  Room link : https://tryhackme.com/room/agentsudoctf<br>
   <img src="https://i.imgur.com/fCY0Ajn.jpg">
 </p>
 
