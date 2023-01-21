@@ -1,6 +1,7 @@
 <p align="center">
   THM : Corridor<br>
   Difficulty : Easy<br>
+  Room link : https://tryhackme.com/room/corridor<br>
   <img src="https://i.imgur.com/kyBIjX6.png">
 </p>
 
