@@ -1,6 +1,7 @@
 <p align="center">
   THM : Blue<br>
   Difficulty : Easy<br>
+  Room link : https://tryhackme.com/room/blue<br>
   <img src="https://i.imgur.com/ga1vRZp.png">
 </p>
 
