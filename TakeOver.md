@@ -1,6 +1,7 @@
 <p align="center">
-  THM : TakeOVer<br>
+  THM : TakeOver<br>
   Difficulty : Easy<br>
+  Room link : https://tryhackme.com/room/takeover<br>
   <img src="https://i.imgur.com/aK2ENq7.jpg">
 </p>
 
