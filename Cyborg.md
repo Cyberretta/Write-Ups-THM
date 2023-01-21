@@ -1,6 +1,7 @@
 <p align="center">
   THM : Cyborg<br>
   Difficulty : Easy<br>
+  Room link : https://tryhackme.com/room/cyborgt8<br>
   <img src="https://i.imgur.com/cSF3hOM.jpg">
 </p>
 
