@@ -1,6 +1,7 @@
 <p align="center">
   THM : Net Sec Challenge<br>
   Difficulty : Medium<br>
+  Room link : https://tryhackme.com/room/netsecchallenge<br>
   <img src="https://i.imgur.com/2rJmKMA.jpg">
 </p>
 
