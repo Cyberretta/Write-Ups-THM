@@ -1,6 +1,7 @@
 <p align="center">
   THM : Alfred<br>
   Difficulty : Easy<br>
+  Room link : https://tryhackme.com/room/alfred<br>
   <img src="https://i.imgur.com/qHciVYu.jpg">
 </p>
 
