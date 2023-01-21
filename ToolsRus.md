@@ -1,6 +1,7 @@
 <p align="center">
   THM : ToolsRus<br>
   Difficulty : Easy<br>
+  Room link : https://tryhackme.com/room/toolsrus<br>
   <img src="https://i.imgur.com/sg6g6sK.png">
 </p>
 
