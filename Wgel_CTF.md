@@ -1,6 +1,7 @@
 <p align="center">
-  THM : Wgel CTF
-  Difficulty : Easy
+  THM : Wgel CTF<br>
+  Difficulty : Easy<br>
+  Room link : https://tryhackme.com/room/wgelctf<br>
   <img src="https://i.imgur.com/2ToxGjL.jpg">
 </p>
 
