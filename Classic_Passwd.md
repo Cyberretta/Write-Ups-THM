@@ -1,6 +1,7 @@
 <p align="center">
   THM : Classic Passwd<br>
   Difficulty : Medium<br>
+  Room link : https://tryhackme.com/room/classicpasswd<br>
   <img src="https://i.imgur.com/GqkQLNS.png">
 </p>
 
