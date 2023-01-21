@@ -1,6 +1,7 @@
 <p align="center">
   THM : Pickle Rick<br>
   Difficulty : Easy<br>
+  Room link : https://tryhackme.com/room/picklerick<br>
   <img src="https://i.imgur.com/3ypKR1f.png">
 </p>
 
