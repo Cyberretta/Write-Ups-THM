@@ -998,6 +998,8 @@ We have access to a powershell web shell !
 
 ## Windows enumeration
 
+First, we can get the second flag in `C:\Users\edwardle.WINDCORP\Desktop\Flag 2.txt`.  
+
 It's time to do some windows enumeration :  
 ![](https://i.imgur.com/ppHHNjr.jpg)  
 We are member of `Account Operators` group. We may have the right to create a new user.  
