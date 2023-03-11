@@ -109,7 +109,7 @@ It is vulnerable to an RCE (Remote Code Execution).
 
 ## AnyDesk exploitation
 
-Let's download the RCE exploit from https://www.exploit-db.com/exploits/49613. Now, we have to edit the target IP adress :  
+Let's download the RCE exploit from https://www.exploit-db.com/exploits/49613. Now, we have to edit the target IP address :  
 ![](https://i.imgur.com/9Jsxv8y.jpg)  
 
 Then, we need to generate a shellcode using msfvenom :  
@@ -265,7 +265,7 @@ One binary took my attention, `setcap`. It is a binary used to edit capabillitie
 ## Privilege escalation
 
 We should be able to use this to get a shell as root.
-Let's copy `/usr/bin/python3` in our home directory first, and then, we can give it the `cap_setuid+ep` capabillitie :  
+Let's copy `/usr/bin/python3` in our home directory first, and then, we can give it the `cap_setuid+ep` capabillity :  
 ```
 annie@desktop:~$ cp /usr/bin/python3 ./
 annie@desktop:~$ setcap cap_setuid+ep ./python3
