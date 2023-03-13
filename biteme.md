@@ -271,8 +271,8 @@ fred@biteme:~$ sudo systemctl restart fail2ban
 
 Let's see if `/bin/bash` has the SUID now :  
 ```
-fred@biteme:/tmp$ ls /bin/bash 
-/bin/bash
+fred@biteme:/tmp$ ls -la /bin/bash 
+-rwsr-xr-x 1 root root 1113504 Jun  6  2019 /bin/bash
 ```
 
 Yes ! Now let's get a root shell :  
