@@ -297,7 +297,8 @@ In this room, we practiced :
 - Services and open ports enumeration using [nmap](https://nmap.org/book/man.html)
 - Web enumeration using [gobuster](https://github.com/OJ/gobuster)
 - Basic php code analysis
-- Brute forcing 
+- MFA Brute forcing
+- Hash cracking using [john](https://www.openwall.com/john/doc/)
 - Basic linux enumeration
 - Privilege escalation using fail2ban misconfiguration
 
