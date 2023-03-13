@@ -11,10 +11,14 @@
 - [Web enumeration](#web-enumeration)
 - [Get valid credentials](#get-valid-credentials)
 - [MFA bruteforce](#mfa-bruteforce)
+- [Getting a shell](#getting-a-shell)
+- [Linux enumeration](#linux-enumeration)
+- [Privilege escalation](#privilege-escalation)
+- [Conclusion](#conclusion)
 
 ## Nmap scan
 
-Like always, let's use nmap to scan the target for open ports and services :  
+Like always, let's use [nmap](https://nmap.org/book/man.html) to scan the target for open ports and services :  
 ```
 attacker@AttackBox:~/biteme$ nmap 10.10.59.32 -A -p- -oN nmapResults.txt
 Starting Nmap 7.80 ( https://nmap.org ) at 2023-03-13 10:35 CET
@@ -38,7 +42,7 @@ Nmap done: 1 IP address (1 host up) scanned in 82.92 seconds
 
 ## Web enumeration
 
-Let's see if gobuster can find interesting files or directories on port 80 :  
+Let's see if [gobuster](https://github.com/OJ/gobuster) can find interesting files or directories on port 80 :  
 ```
 attacker@AttackBox:~/biteme$ gobuster dir -u http://10.10.59.32/ -w /usr/share/wordlists/dirb/big.txt 
 ===============================================================
@@ -112,7 +116,7 @@ attacker@AttackBox:~/biteme$ python3 script.py
 Valid password : fca
 ```
 
-Now we have a valid password ! Let's try to use them :  
+Now we have a valid password ! Let's try the credentials we have now :  
 ![](https://i.imgur.com/pqjG733.jpg)  
 
 After login, we are redirected to this page :  
@@ -120,10 +124,10 @@ After login, we are redirected to this page :
 
 ## MFA bruteforce
 
-Let's try to bruteforce this code using [BurpSuite](). We need to capture the request to this page :  
+Let's try to bruteforce this code using [BurpSuite](https://portswigger.net/burp). We need to capture the request to this page :  
 ![](https://i.imgur.com/LJisGiZ.jpg)  
 
-So we have the parameter name `code`. We can try to use BurpSuite's Intruder but it may be way too slow... So let's write a python script :  
+So we have the parameter name `code`. We can try to use [BurpSuite](https://portswigger.net/burp)'s Intruder but it will be way too slow... So let's write a python script :  
 ```
 #!/usr/bin/python3
 
@@ -178,7 +182,7 @@ Warning: Permanently added '10.10.59.32' (ECDSA) to the list of known hosts.
 Enter passphrase for key 'id_rsa':
 ```
 
-We need a passphrase. Let's try to crack it with john :  
+We need a passphrase. Let's try to crack it with [john](https://www.openwall.com/john/doc/) :  
 ```
 attacker@AttackBox:~$ ssh2john id_rsa > hash.txt
 attacker@AttackBox:~$ /opt/john/run/john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
@@ -290,7 +294,7 @@ THM{*********************************}
 ## Conclusion
 
 In this room, we practiced :  
-- Services and open ports enumeration using nmap
+- Services and open ports enumeration using [nmap](https://nmap.org/book/man.html)
 - Web enumeration using gobuster
 - Basic php code analysis
 - Brute forcing 
