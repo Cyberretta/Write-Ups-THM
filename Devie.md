@@ -256,7 +256,7 @@ def bisect(xa,xb):
 The `eval` function is called with the two values entered by the user. The `eval` function can execute the string passed in argument as python code. Since there isn't any filters 
 or input validations, we can literrally run any python code by writing it in `xa` or `xb` inputs on the web page.
 
-## Eval function exploit
+## Eval function exploitation
 
 I tried to simply use a python3 reverse shell but it didn't work. We have to use a little different payload for this. First, let's start a netcat listener :  
 ```
