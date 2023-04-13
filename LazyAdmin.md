@@ -2,7 +2,7 @@
   THM : LazyAdmin<br>
   Difficulty : Easy<br>
   Room link : https://tryhackme.com/room/lazyadmin<br>
-  <img src="">
+  <img src="https://i.imgur.com/83xGmsL.jpg">
 </p>
 
 ## Summary
