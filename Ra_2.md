@@ -889,7 +889,7 @@ attacker@AttackBox:~/Ra2$ nsupdate
 > quit
 ```
 
-Now, we a client try to send a request to `selfservice.windcorp.thm`, it should be send to our attacking machine.
+Now, when a client try to send a request to `selfservice.windcorp.thm`, it should be send to our attacking machine.
 
 ## NTLM hash capture
 
